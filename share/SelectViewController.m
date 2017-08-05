@@ -35,6 +35,7 @@
     UIButton *uploadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     uploadBtn.frame = CGRectMake(0, 0, 55, 25);
     [uploadBtn setTitle:@"上传" forState:UIControlStateNormal];
+    [uploadBtn addTarget:self action:@selector(uploadImage) forControlEvents:UIControlEventTouchUpInside];
     uploadBtn.tintColor = [UIColor whiteColor];
     uploadBtn.layer.masksToBounds = YES;
     uploadBtn.layer.cornerRadius = 5;
@@ -42,8 +43,6 @@
     uploadBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     UIBarButtonItem *uploadItem = [[UIBarButtonItem alloc] initWithCustomView:uploadBtn];
     self.navigationItem.rightBarButtonItem = uploadItem;
-    
-    
     
     // 设置UICollectionView
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -63,20 +62,48 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)uploadImage{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定上传所选内容" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cencelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cencelAction];
+    // 这里新建了一个带有警示性的选项
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:nil];
+    [alert addAction:yesAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
 - (void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    MyCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell"  forIndexPath:indexPath];
-    cell.imageView.image = [UIImage imageNamed:@"myImg.jpg"];
+    _cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell"  forIndexPath:indexPath];
+    _cell.imageView.image = [UIImage imageNamed:@"myImg"];
     
-    return cell;
+    return _cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return 30;
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    MyCollectionViewCell *cell = (MyCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.imageView.image = [UIImage imageNamed:@"myImg(1)"];
+    if (cell.select == NO){
+        cell.select = YES;
+        cell.imageView.image = [UIImage imageNamed:@"myImg"];
+    } else {
+        cell.select = NO;
+        cell.imageView.image = [UIImage imageNamed:@"myImg(1)"];
+    }
+}
+
+//- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
+//    MyCollectionViewCell *cell = (MyCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//    cell.imageView.image = [UIImage imageNamed:@"myImg"];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

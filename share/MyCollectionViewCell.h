@@ -11,5 +11,6 @@
 @interface MyCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic)UIImageView *imageView;
+@property (nonatomic)BOOL select;
 
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyCollectionViewCell.h"
 
 @interface SelectViewController : UIViewController
+
+@property (nonatomic) MyCollectionViewCell *cell;
 
 @end

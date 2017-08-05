@@ -9,9 +9,9 @@
 #import "SearchViewController.h"
 #import "UploadViewController.h"
 #import "LabelView.h"
-#import "FourView.h"
+#import "FourBtn.h"
 
-@interface SearchViewController ()
+@interface SearchViewController ()<UITextFieldDelegate>
 
 @end
 
@@ -33,6 +33,7 @@
     
     // 搜索栏
     UISearchBar *search = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 74, 355, 50)];
+    search.tag = 1001;
     search.backgroundImage = [[UIImage alloc] init];
     search.barTintColor = [UIColor whiteColor];
     [self.view addSubview:search];
@@ -64,51 +65,91 @@
     NSArray *array = [NSArray arrayWithObjects:@[@"平面设计", @"网页设计", @"UI/icon", @"插画/手绘"], @[@"人气最高", @"收藏最多", @"评论最多", @"编辑精选"], @[@"30分钟前", @"1小时前", @"1月前", @"1年前"], nil];
     // 设置文本
     for (int i = 0; i < 12; i++){
-        FourView *lab = [[FourView alloc] initWithText:array[i / 4][i % 4]];
+        FourBtn *btn = [[FourBtn alloc] initWithText:array[i / 4][i % 4]];
+        [btn addTarget:self action:@selector(selected:) forControlEvents:UIControlEventTouchUpInside];
         if (i < 4){
-            lab.frame = CGRectMake(10 * (i + 1) + 80 * i, 170, 80, 30);
+            btn.frame = CGRectMake(10 * (i + 1) + 80 * i, 170, 80, 30);
         } else if (i < 8){
-            lab.frame = CGRectMake(10 * (i - 3) + 80 * (i - 4), 300, 80, 30);
+            btn.frame = CGRectMake(10 * (i - 3) + 80 * (i - 4), 300, 80, 30);
         } else {
-            lab.frame = CGRectMake(10 * (i - 7) + 80 * (i - 8), 390, 80, 30);
+            btn.frame = CGRectMake(10 * (i - 7) + 80 * (i - 8), 390, 80, 30);
         }
-        [self.view addSubview:lab];
+        [self.view addSubview:btn];
     }
     
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(10, 215, 90, 30)];
-    lab.text = @"虚拟与设计";
-    lab.backgroundColor = [UIColor whiteColor];
-    lab.textAlignment = NSTextAlignmentCenter;
-    lab.layer.masksToBounds = YES;
-    lab.layer.cornerRadius = 3;
-    lab.font = [UIFont systemFontOfSize:16];
-    [self.view addSubview:lab];
-    UILabel *lab4 = [[UILabel alloc] initWithFrame:CGRectMake(115, 215, 70, 30)];
-    lab4.text = @"影视";
-    lab4.backgroundColor = [UIColor whiteColor];
-    lab4.textAlignment = NSTextAlignmentCenter;
-    lab4.layer.masksToBounds = YES;
-    lab4.layer.cornerRadius = 3;
-    lab4.font = [UIFont systemFontOfSize:16];
-    [self.view addSubview:lab4];
-    UILabel *lab5 = [[UILabel alloc] initWithFrame:CGRectMake(200, 215, 70, 30)];
-    lab5.text = @"摄影";
-    lab5.backgroundColor = [UIColor whiteColor];
-    lab5.textAlignment = NSTextAlignmentCenter;
-    lab5.layer.masksToBounds = YES;
-    lab5.layer.cornerRadius = 3;
-    lab5.font = [UIFont systemFontOfSize:16];
-    [self.view addSubview:lab5];
-    UILabel *lab6 = [[UILabel alloc] initWithFrame:CGRectMake(280, 215, 80, 30)];
-    lab6.text = @"其他";
-    lab6.backgroundColor = [UIColor whiteColor];
-    lab6.textAlignment = NSTextAlignmentCenter;
-    lab6.layer.masksToBounds = YES;
-    lab6.layer.cornerRadius = 3;
-    lab6.font = [UIFont systemFontOfSize:16];
-    [self.view addSubview:lab6];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(10, 215, 90, 30);
+    [btn setTitle:@"虚拟与设计" forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    btn.backgroundColor = [UIColor whiteColor];
+//    btn.textAlignment = NSTextAlignmentCenter;
+    btn.layer.masksToBounds = YES;
+    btn.layer.cornerRadius = 3;
+//    btn.font = [UIFont systemFontOfSize:16];
+    [btn addTarget:self action:@selector(selected:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
+    UIButton *btn4 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn4.frame = CGRectMake(115, 215, 70, 30);
+    [btn4 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn4 addTarget:self action:@selector(selected:) forControlEvents:UIControlEventTouchUpInside];
+    [btn4 setTitle:@"影视" forState:UIControlStateNormal];
+    [btn4 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+//    btn4.text = @"影视";
+    btn4.backgroundColor = [UIColor whiteColor];
+//    btn4.textAlignment = NSTextAlignmentCenter;
+    btn4.layer.masksToBounds = YES;
+    btn4.layer.cornerRadius = 3;
+//    btn4.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:btn4];
+    UIButton *btn5 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn5.frame = CGRectMake(200, 215, 70, 30);
+    [btn5 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn5 addTarget:self action:@selector(selected:) forControlEvents:UIControlEventTouchUpInside];
+    [btn5 setTitle:@"摄影" forState:UIControlStateNormal];
+    [btn5 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+//    btn5.text = @"摄影";
+    btn5.backgroundColor = [UIColor whiteColor];
+//    btn5.textAlignment = NSTextAlignmentCenter;
+    btn5.layer.masksToBounds = YES;
+    btn5.layer.cornerRadius = 3;
+//    btn5.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:btn5];
+    UIButton *btn6 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn6.frame = CGRectMake(280, 215, 80, 30);
+    [btn6 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn6 addTarget:self action:@selector(selected:) forControlEvents:UIControlEventTouchUpInside];
+    [btn6 setTitle:@"其他" forState:UIControlStateNormal];
+    [btn6 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+//    btn6.text = @"其他";
+    btn6.backgroundColor = [UIColor whiteColor];
+//    btn6.textAlignment = NSTextAlignmentCenter;
+    btn6.layer.masksToBounds = YES;
+    btn6.layer.cornerRadius = 3;
+//    btn6.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:btn6];
     
     // Do any additional setup after loading the view.
+}
+
+- (void)selected:(UIButton *)btn{
+    if (btn.selected == NO){
+        btn.backgroundColor = [UIColor colorWithRed:0.21 green:0.56 blue:0.8 alpha:1];
+        btn.selected = YES;
+    } else {
+        btn.selected = NO;
+        btn.backgroundColor = [UIColor whiteColor];
+    }
+}
+
+// 实现点击空白处以回收键盘
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // 通过tag值找到对应的text
+    UITextField *userText = [self.view viewWithTag:1001];
+    
+    [userText resignFirstResponder];
 }
 
 - (void)pushClick{

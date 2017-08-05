@@ -9,7 +9,7 @@
 #import "UploadViewController.h"
 #import "SelectViewController.h"
 #import "DropDown.h"
-#import "FourView.h"
+#import "FourBtn.h"
 
 @interface UploadViewController () <UITextViewDelegate>
 
@@ -75,7 +75,7 @@
     // 设置标签
     NSArray *array1 = [NSArray arrayWithObjects:@"平面设计", @"网页设计", @"UI/icon", @"插画/手绘", nil];
     for (int i = 0; i < 4; i++){
-        FourView *lab = [[FourView alloc] initWithText:array1[i]];
+        FourBtn *lab = [[FourBtn alloc] initWithText:array1[i]];
         lab.frame = CGRectMake(10 * (i + 1) + 80 * i, 225, 80, 30);
         [self.view addSubview:lab];
     }

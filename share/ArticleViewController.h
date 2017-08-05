@@ -10,4 +10,9 @@
 
 @interface ArticleViewController : UIViewController
 
+@property (nonatomic) UIScrollView *scrollView;
+@property (nonatomic) UITableView *tableView1;
+@property (nonatomic) UITableView *tableView2;
+@property (nonatomic) UITableView *tableView3;
+
 @end

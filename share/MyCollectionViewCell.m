@@ -17,6 +17,7 @@
         [self.contentView addSubview:self.imageView];
         
     }
+    self.select = YES;
     return self;
 }
 
